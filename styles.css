@@ -25,8 +25,9 @@
 .grid {
     position: relative;
     border: 2px solid blue;
-    height: 300px;
+    max-height: fit-content;
     margin: 30px;
+	padding: 20px;
 }
 
 .keyboard {

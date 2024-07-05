@@ -1,8 +1,8 @@
-let body = document.body;
-body.style.backgroundColor = '#121213';
+let grid = document.querySelector('#grid');
+/* document.body.style.backgroundColor = '#121213'; */
 
 document.addEventListener("DOMContentLoaded", () => {
-	const fontFace = new FontFace('whatever', 'url("franklin-normal-600.woff2")');
+	const fontFace = new FontFace('whatever', 'url("franklin-normal-700.woff2")');
 
 	fontFace.load().then((loadedFontFace) => {
 		document.fonts.add(loadedFontFace);
@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		const css = `
 			@font-face {
 				font-family: 'whatever';
-				src: url('franklin-normal-600.woff2') format('truetype');
+				src: url('franklin-normal-700.woff2') format('truetype');
 			}
-			body {
+			.box {
 				font-family: 'whatever', sans-serif;
 				font-weight: 800;
-				font-size: 1rem;
+				font-size: 2rem;
 			}
 		`;
 		style.appendChild(document.createTextNode(css));
@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 let box = document.createElement('div');
-box.style.width = '50px';
-box.style.height = '50px';
+box.style.width = '60px';
+box.style.height = '60px';
 box.style.backgroundColor = 'transparent';
 box.style.border = '2px solid #3a3a3c';
 box.style.display = 'inline-block';
@@ -55,12 +55,12 @@ for (let i = 0; i < 5; ++i) {
 	row.appendChild(boxClone);
 }
 
-for (let i = 0; i < 6; ++i) {
+for (let i = 0; i < 7; ++i) {
 	let rowClone = row.cloneNode(true);
 	for (let j = 0; j < rowClone.children.length; ++j) {
 		rowClone.children[j].classList.add('row-' + i.toString());
 	}
-	body.appendChild(rowClone);
+	grid.appendChild(rowClone);
 }
 
 function setLetter(row, col, letter, state) {
