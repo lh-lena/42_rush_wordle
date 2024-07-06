@@ -2,6 +2,8 @@ let grid = document.querySelector('#grid');
 let loseContainer = document.getElementById('lose');
 let winContainer = document.getElementById('win');
 let	rulesWrapper = document.getElementById('rules-wrapper');
+let spanWord = document.getElementById('cur-word');
+
 
 const idx = Math.floor(Math.random() * words.length);
 const theWord = words[idx];
@@ -181,10 +183,8 @@ function win() {
 }
 
 function lose() {
-	let newParagraph = document.createElement('p');
 
-	newParagraph.textContent = `The word was ${theWord}.`;
-	loseContainer.append(newParagraph);
+	spanWord.textContent = theWord;
 	loseContainer.style.display = 'block';
 	console.log(`You lost! The word was ${theWord}.`);
 }
