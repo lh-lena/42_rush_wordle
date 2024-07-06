@@ -1,9 +1,12 @@
 let grid = document.querySelector('#grid');
+let loseContainer = document.getElementById('lose');
+let winContainer = document.getElementById('win');
+let	rulesWrapper = document.getElementById('rules-wrapper');
 
 const idx = Math.floor(Math.random() * words.length);
 const theWord = words[idx];
 const rows = 6;
-const cols = theWord.length;
+const cols = 5;
 let cursorRow = 0;
 let cursorCol = 0;
 
@@ -30,43 +33,27 @@ document.addEventListener("DOMContentLoaded", () => {
 	}).catch((error) => {
 		console.error('Failed to load the font:', error)
 	});
+	createGrid(rows, cols);
+	setTheme();
 });
 
-let box = document.createElement('div');
-box.style.width = '60px';
-box.style.height = '60px';
-box.style.backgroundColor = 'transparent';
-box.style.border = '2px solid #3a3a3c';
-box.style.display = 'inline-block';
-box.style.margin = '2px';
-box.classList.add('box');
+function createGrid(rows, cols) {
+	let grid = document.getElementById('grid');
 
-let letter = document.createElement('p');
-letter.style.background = 'none';
-letter.style.display = 'flex';
-letter.style.alignItems = 'center';
-letter.style.justifyContent = 'center';
-letter.style.lineHeight = '10%';
-letter.style.color = 'white';
-letter.innerHTML = '&nbsp;';
-box.appendChild(letter);
+	for (let i = 0; i < rows; ++i) {
+		let row = document.createElement('div');
+		row.classList.add('row');
 
-let row = document.createElement('div');
-row.style.maxWidth = 'fit-content';
-row.style.margin = 'auto';
-
-for (let i = 0; i < cols; ++i) {
-	let boxClone = box.cloneNode(true);
-	boxClone.classList.add('col-' + i.toString());
-	row.appendChild(boxClone);
-}
-
-for (let i = 0; i < rows; ++i) {
-	let rowClone = row.cloneNode(true);
-	for (let j = 0; j < rowClone.children.length; ++j) {
-		rowClone.children[j].classList.add('row-' + i.toString());
+		for (let j = 0; j < cols; ++j) {
+			let box = document.createElement('div');
+			box.classList.add('box', 'col-' + j.toString(), 'row-' + i.toString(), 'default-cell-bg');
+			let letter = document.createElement('p');
+			letter.innerHTML = '&nbsp;';
+			box.appendChild(letter);
+			row.appendChild(box);
+		}
+		grid.appendChild(row);
 	}
-	grid.appendChild(rowClone);
 }
 
 function setLetter(row, col, letter, state) {
@@ -75,34 +62,11 @@ function setLetter(row, col, letter, state) {
 		box.querySelector('p').innerHTML = '&nbsp;';
 	else
 		box.querySelector('p').innerText = letter.toUpperCase();
-	if (state === 'absent')
-	{
-		box.style.backgroundColor = '#3a3a3c';
-		box.style.border = '2px solid #3a3a3c';
-	}
-	else if (state === 'present')
-	{
-		box.style.backgroundColor = '#b59f3b';
-		box.style.border = '2px solid #b59f3b';
-	}
-	else if (state === 'correct')
-	{
-		box.style.backgroundColor = '#538d4e';
-		box.style.border = '2px solid #538d4e';
-	}
-	else if (state === 'empty')
-	{
-		box.style.backgroundColor = 'transparent';
-		if (letter)
-			box.style.border = '2px solid #565758';
-		else
-			box.style.border = '2px solid #3a3a3c';
-	}
+	box.classList.remove('absent', 'present', 'correct', 'empty', 'default-cell-bg');
+	if (state === 'empty' && !letter)
+		box.classList.add('default-cell-bg');
 	else
-	{
-		box.style.backgroundColor = 'red';
-		box.style.border = '2px solid #565758';
-	}
+		box.classList.add(state);
 }
 
 function backspace() {
@@ -122,27 +86,17 @@ function getFrequencies(string) {
            freq[character] = 1;
         }
     }
-
     return freq;
 };
 
 function updateKeyboard(letter, state) {
 	let key = document.querySelector('.' + letter);
-	
-	if (state === 'absent')
-		key.style.backgroundColor = '#3a3a3c';
-	else if (state === 'present')
-		key.style.backgroundColor = '#b59f3b';
-	else if (state === 'correct')
-		key.style.backgroundColor = '#538d4e';
-}
-
-function win() {
-	console.log(`Congratulations! You guessed the word in ${cursorRow + 1} out of ${rows} tries!`);
-}
-
-function lose() {
-	console.log(`You lost! The word was ${theWord}.`);
+	if (key)
+	{
+		key.classList.remove('correct', 'present', 'absent', 'default');
+		key.classList.add(state);
+		console.log(key.classList);
+	}
 }
 
 function reveal() {
@@ -186,6 +140,14 @@ function reveal() {
 	}
 }
 
+function wordError() {
+	let	msg = document.getElementById('word-error-msg');
+	msg.style.display = 'block';
+	setTimeout(() => {
+		msg.style.display = 'none';
+	}, 1000);
+}
+
 function enter() {
 	if (cursorCol < cols)
 		return;
@@ -196,7 +158,7 @@ function enter() {
 	});
 	if (!words.includes(word))
 	{
-		console.log('Not in word list!');
+		wordError();
 		return;
 	}
 	reveal();
@@ -207,6 +169,24 @@ function enter() {
 	}
 	cursorCol = 0;
 	cursorRow++;
+}
+
+function win() {
+	let newParagraph = document.createElement('p');
+
+	newParagraph.textContent = `You guessed the word in ${cursorRow + 1} out of ${rows} tries!`;
+	winContainer.append(newParagraph);
+	winContainer.style.display = 'block';
+	console.log(`Congratulations! You guessed the word in ${cursorRow + 1} out of ${rows} tries!`);
+}
+
+function lose() {
+	let newParagraph = document.createElement('p');
+
+	newParagraph.textContent = `The word was ${theWord}.`;
+	loseContainer.append(newParagraph);
+	loseContainer.style.display = 'block';
+	console.log(`You lost! The word was ${theWord}.`);
 }
 
 function isLetter(str) {
@@ -252,3 +232,49 @@ document.addEventListener("click", (keyEvent) => {
 	let letter = el.innerText.toLowerCase();
 	handleKeyEvent(letter);
 });
+
+function	restartGame() {
+	cursorRow = 0;
+	cursorCol = 0;
+	// idx = Math.floor(Math.random() * words.length); //TODO
+	// theWord = words[idx];
+	console.log(theWord);
+	loseContainer.style.display = 'none';
+	winContainer.style.display = 'none';
+	for (let i = 0; i < rows; i++)
+		for (let j = 0; j < cols; j++)
+			setLetter(i, j, '', 'empty');
+	let keys = document.querySelectorAll('.key');
+	keys.forEach(key => {
+		updateKeyboard(key.textContent, 'default');
+	});
+}
+
+function showRules() {
+	rulesWrapper.style.display = 'block';
+}
+
+function hideRules() {
+	rulesWrapper.style.display = 'none';
+}
+
+document.addEventListener('keyup', function(event) {
+	if (event.key === 'Escape')
+		hideRules();
+});
+
+function	setTheme()
+{
+	const root = document.documentElement;
+	const themeToggleButton = document.getElementById('theme-toggle');
+	const newTheme = root.className === 'dark' ? 'light' : 'dark';
+	root.className = newTheme;
+	document.querySelector('.theme-name').textContent = newTheme;
+	themeToggleButton.innerHTML = newTheme === 'dark' ? '🔆' : '🌙';
+}
+
+document.querySelector('.theme-toggle').addEventListener('click', setTheme);
+document.querySelector('.game-rules-icon').addEventListener('click', showRules);
+document.querySelector('#cross-container').addEventListener('click', hideRules);
+document.querySelector('#cross-lose').addEventListener('click', restartGame);
+document.querySelector('#cross-win').addEventListener('click', restartGame);
