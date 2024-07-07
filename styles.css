@@ -32,6 +32,11 @@
 
 @font-face {
 	font-family: 'karnak';
+	src: url('karnak-normal-400.woff2') format('truetype');
+}
+
+@font-face {
+	font-family: 'karnak-bold';
 	src: url('karnakcondensed-normal-700.woff2') format('truetype');
 }
 
