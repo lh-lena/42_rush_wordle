@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-2>/dev/null 1>&2 git -C /var/www/wordle stash
-2>/dev/null 1>&2 git -C /var/www/wordle clean -df
-2>/dev/null 1>&2 git -C /var/www/wordle checkout main
-2>/dev/null 1>&2 git -C /var/www/wordle pull -f origin-http main
+2>error 1>&2 git -C /var/www/wordle stash
+2>>error 1>&2 git -C /var/www/wordle clean -df
+2>>error 1>&2 git -C /var/www/wordle checkout main
+2>>error 1>&2 git -C /var/www/wordle pull -f origin-http main
 
 printf '%s\r\n' "HTTP/1.1 302 Moved"
 # TODO: NOT SAFE
