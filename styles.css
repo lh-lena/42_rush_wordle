@@ -26,16 +26,21 @@
 }
 
 @font-face {
-    font-family: 'karnak-normal';
-    src: url('karnak-normal-400.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+	font-family: 'franklin';
+	src: url('franklin-normal-700.woff2') format('truetype');
+}
+
+@font-face {
+	font-family: 'karnak';
+	src: url('karnakcondensed-normal-700.woff2') format('truetype');
+}
 
 body {
     background-color: var(--bgd-color);
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
+	font-family: 'karnak', sans-serif;
+	font-size: 2rem;
 }
 
 button:focus {
@@ -93,6 +98,8 @@ button:focus {
     border: 2px solid var(--border-clr);
     display: inline-block;
     margin: 2px;
+	font-family: 'franklin', sans-serif;
+	font-size: 2rem;
 }
 
 .box p {

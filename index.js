@@ -5,7 +5,6 @@ let	rulesWrapper = document.getElementById('rules-wrapper');
 let spanWord = document.getElementById('cur-word');
 
 const originalLink = window.location.origin + window.location.pathname;
-// const curPageUrl = window.location.href;
 let generatedURL = originalLink + '?';
 let idx = Math.floor(Math.random() * words.length);
 let theWord = words[idx];
@@ -17,28 +16,6 @@ let	userWin = 0;
 let urlWords = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-	const fontFace = new FontFace('whatever', 'url("franklin-normal-700.woff2")');
-
-	fontFace.load().then((loadedFontFace) => {
-		document.fonts.add(loadedFontFace);
-		const style = document.createElement('style');
-		style.type = 'text/css';
-
-		const css = `
-			@font-face {
-				font-family: 'whatever';
-				src: url('franklin-normal-700.woff2') format('truetype');
-			}
-			.box {
-				font-family: 'whatever', sans-serif;
-				font-size: 2rem;
-			}
-		`;
-		style.appendChild(document.createTextNode(css));
-		document.head.appendChild(style);
-	}).catch((error) => {
-		console.error('Failed to load the font:', error)
-	});
 	createGrid(rows, cols);
 	setTheme();
 	creatRowExample('example-correct', 'weary', 'correct', 0);
