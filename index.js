@@ -4,6 +4,7 @@ let winContainer = document.getElementById('win');
 let	rulesWrapper = document.getElementById('rules-wrapper');
 let spanWord = document.getElementById('cur-word');
 
+//const originalLink = window.location.hostname;
 const originalLink = 'https://timo.one/worlde/';
 // const curPageUrl = window.location.href;
 let generatedURL = originalLink;
@@ -123,6 +124,17 @@ function reveal() {
 		setLetter(cursorRow, i, letter, 'absent');
 		updateKeyboard(letter, 'absent');
 	}
+	
+	for (let i = 0; i < rowBoxes.length; ++i)
+	{
+		let letter = rowBoxes[i].innerText.toLowerCase();
+		if (theWord.includes(letter) && letterFreqs[letter] >= 1)
+		{
+			setLetter(cursorRow, i, letter, 'present');
+			updateKeyboard(letter, 'present');
+			letterFreqs[letter]--;
+		}
+	}
 
 	let correctLetters = 0;
 	for (let i = 0; i < rowBoxes.length; ++i)
@@ -141,17 +153,6 @@ function reveal() {
 		userWin = 1;
 		win();
 		return;
-	}
-
-	for (let i = 0; i < rowBoxes.length; ++i)
-	{
-		let letter = rowBoxes[i].innerText.toLowerCase();
-		if (theWord.includes(letter) && letterFreqs[letter] >= 1)
-		{
-			setLetter(cursorRow, i, letter, 'present');
-			updateKeyboard(letter, 'present');
-			letterFreqs[letter]--;
-		}
 	}
 }
 
@@ -185,7 +186,7 @@ function enter() {
 		wordError();
 		return;
 	}
-	generatedURL += (word ? '&' + encodeURIComponent(word) : '');
+	generatedURL += (word ? '&' + encodeURIComponent('word') + encodeURIComponent(cursorRow + 1) + encodeURIComponent('=') + encodeURIComponent(word): '');
 	console.log(generatedURL);
 	console.log(originalLink);
 	reveal();
@@ -200,7 +201,6 @@ function enter() {
 
 function win() {
 	let newParagraph = document.getElementById('description');
-
 	newParagraph.textContent = `You guessed the word ${theWord.toUpperCase()} in ${cursorRow + 1} out of ${rows} tries!`;
 	winContainer.style.display = 'block';
 	console.log(`Congratulations! You guessed the word in ${cursorRow + 1} out of ${rows} tries!`);
@@ -259,6 +259,8 @@ document.addEventListener("click", (keyEvent) => {
 
 function	shareResult() {
 	let	msg = document.getElementById('info-msg');
+	generatedURL += encodeURIComponent("theWord=" + encodeURIComponent(theWord));
+	navigator.clipboard.writeText(generatedURL);
 	msg.textContent = 'Copied results to clipboard';
 	msg.style.display = 'block';
 	console.log(msg);
