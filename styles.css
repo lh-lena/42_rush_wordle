@@ -51,8 +51,20 @@ button:focus {
     outline: none;
 }
 
+.header-module {
+    position: relative;
+    text-transform: capitalize;
+    font-style: 26px;
+    max-width: var(--max-width-game);
+}
+
+.welcome-title {
+    padding: 5px;
+}
+
 .theme-toggle, 
-.game-rules-icon {
+.game-rules-icon,
+.play-icon {
     position: absolute;
     top: 8%;
     right: 0%;
@@ -66,7 +78,15 @@ button:focus {
 }
 
 .game-rules-icon {
-    right: 13%;
+    right: 11%;
+}
+
+.play-icon {
+    display: none;
+    width: 70px;
+    border-radius: 10px;
+    right: 22%;
+    text-transform: capitalize;
 }
 
 .game-section {
@@ -78,12 +98,6 @@ button:focus {
     margin: 0 auto;
     color: var(--text-color);
     cursor: default;
-}
-
-.header-module {
-    position: relative;
-    text-transform: capitalize;
-    font-style: 26px;
 }
 
 .grid {
@@ -126,8 +140,7 @@ button:focus {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    top: 10px;
-    /* height: 200px; */
+    margin-top: 30px;
 }
 
 .keyboard-row {
@@ -156,7 +169,8 @@ button:focus {
 
 .theme-toggle:hover, 
 .game-rules-icon:hover,
-.key:hover {
+.key:hover,
+.play-icon:hover {
     cursor: pointer;
     background-color: var(--bgd-clr-empty);
 }
@@ -187,7 +201,6 @@ button:focus {
     opacity: 0.95;
 }
 
-
 .game-rules-wrapper,
 .win,
 .lose {
@@ -214,7 +227,6 @@ button:focus {
     font-size: 25px;
     opacity: 0.98;
     text-align: center;
-
 }
 
 #win button,
@@ -329,7 +341,6 @@ h2 {
 .example div.box p {
     font-size: 18px;
     line-height: 0px;
-    
 }
 
 
@@ -409,10 +420,14 @@ h2 {
         font-size: 18px;
     }
     .theme-toggle, 
-    .game-rules-icon {
+    .game-rules-icon,
+    .play-icon {
         font-size: 14px;
         width: 30px;
         height: 30px;
+    }
+    .play-icon {
+        width: 50px;
     }
     .grid {
         margin: 0;
@@ -434,7 +449,7 @@ h2 {
     }
     .keyboard {
         height: 15%;
-        margin: 0;
+        margin-top: 20px;
         padding: 0;
     }
     .key {

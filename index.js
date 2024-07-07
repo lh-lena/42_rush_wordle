@@ -253,6 +253,7 @@ function	restartGame() {
 	cursorRow = 0;
 	cursorCol = 0;
 	userWin = 0;
+	generatedURL = originalLink;
 	idx = Math.floor(Math.random() * words.length);
 	theWord = words[idx];
 	loseContainer.style.display = 'none';
@@ -309,11 +310,16 @@ function	setTheme()
 	themeToggleButton.innerHTML = newTheme === 'dark' ? '🔆' : '🌙';
 }
 
-
 document.getElementById('theme-toggle').addEventListener('click', function(event) {
 	event.preventDefault();
 	event.target.blur();
 	setTheme();
+});
+
+document.getElementById('play-icon').addEventListener('click', function(event) {
+	event.preventDefault();
+	event.target.blur();
+	restartGame();
 });
 
 let shareBnts = document.querySelectorAll('.share-btn');
@@ -331,8 +337,15 @@ document.querySelector('#cross-container').addEventListener('click', hideRules);
 document.querySelector('#cross-lose').addEventListener('click', restartGame);
 document.querySelector('#cross-win').addEventListener('click', restartGame);
 
+function	showPlayBtn() {
+	let btn = document.getElementById('play-icon');
+
+	btn.style.display = block;
+}
+
 function animateWords(lines) {
 	let delay = 0;
+	showPlayBtn();
 
 	lines.forEach(line => {
 		[...line].forEach(letter => {
@@ -373,3 +386,4 @@ function handleParams() {
 }
 
 handleParams();
+
