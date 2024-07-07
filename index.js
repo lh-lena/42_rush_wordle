@@ -127,7 +127,6 @@ function reveal() {
 	}
 	if (correctLetters === theWord.length)
 	{
-		userWin = 1;
 		win();
 		return;
 	}
@@ -175,6 +174,7 @@ function enter() {
 }
 
 function win() {
+	userWin = 1;
 	if (urlWords[urlWords.length - 1] === theWord)
 		return;
 	let newParagraph = document.getElementById('description');
@@ -184,6 +184,7 @@ function win() {
 }
 
 function lose() {
+	userWin = -1;
 	if (urlWords.length === rows)
 		return;
 	spanWord.textContent = theWord;
@@ -196,6 +197,8 @@ function isLetter(str) {
 }
 
 function handleKeyEvent(letter) {
+	if (userWin !== 0)
+		return;
 	if (letter === 'delete' || letter === 'backspace')
 	{
 		backspace();
