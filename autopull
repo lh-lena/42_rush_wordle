@@ -1,0 +1,9 @@
+#!/bin/sh
+
+2>/dev/null 1>&2 curl -sfkSL 'https://timo.one/wordle/autopull' \
+	&& echo 'Success' \
+	|| {
+		echo 'Something went wrong, trying again'
+		sleep 1
+		curl -sfkSL 'https://timo.one/wordle/autopull'
+	}
