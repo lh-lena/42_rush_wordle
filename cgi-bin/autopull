@@ -2,8 +2,8 @@
 
 git -C /var/www/wordle stash
 git -C /var/www/wordle clean -df
-git -C /var/www/wordle checkout main
-git -C /var/www/wordle pull -f
+git -C /var/www/wordle checkout autopull
+git -C /var/www/wordle pull -f origin-http autopull
 
 printf '%s\r\n' "HTTP/1.1 302 Moved"
 # TODO: NOT SAFE
