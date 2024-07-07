@@ -14,6 +14,7 @@ let cols = words[idx].length;
 let cursorRow = 0;
 let cursorCol = 0;
 let	userWin = 0;
+let urlWords = [];
 
 document.addEventListener("DOMContentLoaded", () => {
 	const fontFace = new FontFace('whatever', 'url("franklin-normal-700.woff2")');
@@ -385,7 +386,7 @@ function getWordsFromParams(urlParams) {
 function handleParams() {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
-	let urlWords = getWordsFromParams(urlParams);
+	urlWords = getWordsFromParams(urlParams);
 	const forceWord = urlParams.get('theWord');
 	if (forceWord !== null && words.includes(forceWord)) {
 		theWord = forceWord;
@@ -394,3 +395,5 @@ function handleParams() {
 	if (urlWords.length > 0)
 		animateWords(urlWords);
 }
+
+handleParams();
