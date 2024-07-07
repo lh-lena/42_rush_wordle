@@ -320,6 +320,8 @@ document.getElementById('play-icon').addEventListener('click', function(event) {
 	event.preventDefault();
 	event.target.blur();
 	restartGame();
+	let btn = document.getElementById('play-icon');
+	btn.style.display = 'none';
 });
 
 let shareBnts = document.querySelectorAll('.share-btn');
@@ -340,12 +342,11 @@ document.querySelector('#cross-win').addEventListener('click', restartGame);
 function	showPlayBtn() {
 	let btn = document.getElementById('play-icon');
 
-	btn.style.display = block;
+	btn.style.display = 'block';
 }
 
 function animateWords(lines) {
 	let delay = 0;
-	showPlayBtn();
 
 	lines.forEach(line => {
 		[...line].forEach(letter => {
@@ -357,6 +358,9 @@ function animateWords(lines) {
 			handleKeyEvent('enter');
 		}, delay += 100);
 	});
+	setTimeout(() => {
+		showPlayBtn();
+	}, delay);
 }
 
 function getWordsFromParams(urlParams) {
