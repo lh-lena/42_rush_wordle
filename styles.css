@@ -256,14 +256,36 @@ h2 {
     border-radius: 30px
 }
 
+
 .play-again {
     background-color: var(--text-color);
     color: var(--bgd-color);
 }
 
+.play-again:hover {
+    box-shadow: 0 1px 8px var(--text-color);
+}
+
 #cur-word {
     box-sizing: border-box;
     border:rgba(0, 0, 0, 0.9)
+}
+
+#btn-dictionary {
+    background-color: var(--bgd-clr-absent);
+    color: var(--text-color);
+    border-radius: 1px;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    width: 150px;
+    height: 52px;
+    border-radius: 30px
+}
+
+#btn-dictionary:hover {
+    text-decoration: underline;
+    box-shadow: 0 0 3px var(--text-color);
 }
 
 .share-btn:hover {
@@ -292,7 +314,6 @@ h2 {
     justify-content: start;
     text-align: left;
 }
-
 
 .cross-container {
     position: fixed;
@@ -426,14 +447,24 @@ h2 {
         --max-width-game: 300px;
         padding: 0;
     }
-    .game-rules-wrapper,
+    .game-rules-wrapper {
+        min-width: 300px;
+        font-size: 14px;
+        padding: 0;
+    }
     #win,
     #lose {
         min-width: 300px;
-        font-size: 16px;
+        font-size: 14px;
+        padding: 20px 0;
+        height: 500px;
+    }
+    .share-container {
+        margin: 0;
     }
     #description {
         padding: 0 20px;
+        font-size: 18px;
     }
     h1 {
         margin: 0;
@@ -456,6 +487,10 @@ h2 {
     .share-btn,
     .play-again {
         width: 170px;
+        font-size: 18px;
+    }
+    #btn-dictionary {
+        width: 130px;
         font-size: 18px;
     }
     .grid {

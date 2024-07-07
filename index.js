@@ -345,6 +345,15 @@ for (let i = 0; i < bnts.length; i++) {
 	bnts[i].addEventListener('click', restartGame);
 }
 
+let dictionaryBtn = document.getElementById('btn-dictionary');
+dictionaryBtn.addEventListener('click', (e) => {
+	e.preventDefault();
+	e.target.blur();
+	let linkUrl = `https://www.merriam-webster.com/dictionary/${theWord}`;
+	window.open(linkUrl, '_blank');
+});
+
+
 document.querySelector('.game-rules-icon').addEventListener('click', showRules);
 document.querySelector('#cross-container').addEventListener('click', hideRules);
 document.querySelector('#cross-lose').addEventListener('click', restartGame);
