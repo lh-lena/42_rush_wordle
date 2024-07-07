@@ -35,17 +35,16 @@
 	src: url('karnak-normal-400.woff2') format('truetype');
 }
 
-@font-face {
-	font-family: 'karnak-bold';
-	src: url('karnakcondensed-normal-700.woff2') format('truetype');
-}
+/* @font-face { */
+	/* font-family: 'karnak-bold'; */
+	/* src: url('karnakcondensed-normal-700.woff2') format('truetype'); */
+/* } */
 
 body {
     background-color: var(--bgd-color);
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
 	font-family: 'karnak', sans-serif;
-	font-size: 2rem;
 }
 
 button:focus {
