@@ -8,3 +8,4 @@
 printf '%s\r\n' "HTTP/1.1 302 Moved"
 # TODO: NOT SAFE
 printf '%s\r\n' "Location: $HTTP_X_FORWARDED_PROTO://$SERVER_NAME/wordle/"
+printf '%s\r\n' ""
