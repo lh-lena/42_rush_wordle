@@ -187,8 +187,6 @@ function enter() {
 		return;
 	}
 	generatedURL += (word ? '&' + encodeURIComponent('word') + encodeURIComponent(cursorRow) + '=' + encodeURIComponent(word) : '');
-	console.log(generatedURL);
-	console.log(originalLink);
 	reveal();
 	if (cursorRow >= rows - 1 && userWin === 0)
 	{
@@ -266,7 +264,6 @@ function	shareResult() {
 	navigator.clipboard.writeText(generatedURL.replace('/?&', '/?'));
 	msg.textContent = 'Copied results to clipboard';
 	msg.style.display = 'block';
-	console.log(msg);
 	setTimeout(() => {
 		msg.style.display = 'none';
 	}, 1000);
@@ -278,7 +275,6 @@ function	restartGame() {
 	userWin = 0;
 	idx = Math.floor(Math.random() * words.length);
 	theWord = words[idx];
-	console.log(theWord);
 	loseContainer.style.display = 'none';
 	winContainer.style.display = 'none';
 	for (let i = 0; i < rows; i++)
@@ -375,7 +371,7 @@ function getWordsFromParams(urlParams) {
 
 	for (let i = 0; i < rows; ++i) {
 		let word = urlParams.get('word' + i.toString());
-		if (word !== null && word.length == cols && words.includes(word))
+		if (word !== null && word.length === cols && words.includes(word))
 			tmpWords.push(word)
 		else
 			break
