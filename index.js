@@ -4,6 +4,9 @@ let winContainer = document.getElementById('win');
 let	rulesWrapper = document.getElementById('rules-wrapper');
 let spanWord = document.getElementById('cur-word');
 
+const originalLink = 'https://timo.one/worlde/';
+// const curPageUrl = window.location.href;
+let generatedURL = originalLink;
 let idx = Math.floor(Math.random() * words.length);
 let theWord = words[idx];
 const rows = 6;
@@ -37,6 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 	createGrid(rows, cols);
 	setTheme();
+	creatRowExample('example-correct', 'weary', 'correct', 0);
+	creatRowExample('example-present', 'pills', 'present', 2);
+	creatRowExample('example-absent', 'vague', 'absent', 3);
 });
 
 function createGrid(rows, cols) {
@@ -69,6 +75,13 @@ function setLetter(row, col, letter, state) {
 		box.classList.add('default-cell-bg');
 	else
 		box.classList.add(state);
+	if (letter)
+	{
+		box.style.transform = 'scale(1.1)';
+		setTimeout(() => {
+			box.style.transform = 'scale(1)';
+		}, 100);
+	}
 }
 
 function backspace() {
@@ -97,7 +110,6 @@ function updateKeyboard(letter, state) {
 	{
 		key.classList.remove('correct', 'present', 'absent', 'default');
 		key.classList.add(state);
-		console.log(key.classList);
 	}
 }
 
@@ -144,7 +156,15 @@ function reveal() {
 }
 
 function wordError() {
+	let rowBoxes = document.querySelectorAll('.row-' + cursorRow.toString());
 	let	msg = document.getElementById('info-msg');
+
+	rowBoxes.forEach(box => {
+		box.style.animation = 'moveLeftRight 1s infinite';
+		setTimeout(() => {
+			box.style.animation = 'none';
+		}, 500);
+	});
 	msg.innerHTML = 'Not in word list';
 	msg.style.display = 'block';
 	setTimeout(() => {
@@ -165,6 +185,9 @@ function enter() {
 		wordError();
 		return;
 	}
+	generatedURL += (word ? '&' + encodeURIComponent(word) : '');
+	console.log(generatedURL);
+	console.log(originalLink);
 	reveal();
 	if (cursorRow >= rows - 1 && userWin === 0)
 	{
@@ -248,7 +271,7 @@ function	restartGame() {
 	cursorRow = 0;
 	cursorCol = 0;
 	userWin = 0;
-	idx = Math.floor(Math.random() * words.length); //TODO
+	idx = Math.floor(Math.random() * words.length);
 	theWord = words[idx];
 	console.log(theWord);
 	loseContainer.style.display = 'none';
@@ -260,6 +283,26 @@ function	restartGame() {
 	keys.forEach(key => {
 		updateKeyboard(key.textContent, 'default');
 	});
+}
+
+function creatRowExample(elem, word, style, idx) {
+	let node = document.getElementById(elem);
+	let row = document.createElement('div');
+	row.classList.add('row');
+
+	for (let j = 0; j < cols; ++j) {
+		let box = document.createElement('div');
+		box.classList.add('box', 'col-' + j.toString(), 'row', 'empty');
+		let letter = document.createElement('p');
+		letter.innerHTML = word[j].toUpperCase();
+		if (j === idx) {
+			box.classList.remove('empty');
+			box.classList.add(style);
+		}
+		box.appendChild(letter);
+		row.appendChild(box);
+	}
+	node.appendChild(row);
 }
 
 function showRules() {
@@ -293,7 +336,7 @@ document.getElementById('theme-toggle').addEventListener('click', function(event
 });
 
 let shareBnts = document.querySelectorAll('.share-btn');
-for (let i = 0; i < bnts.length; i++) {
+for (let i = 0; i < shareBnts.length; i++) {
 	shareBnts[i].addEventListener('click', shareResult);
 }
 
