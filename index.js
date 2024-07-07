@@ -253,7 +253,8 @@ function	restartGame() {
 	cursorRow = 0;
 	cursorCol = 0;
 	userWin = 0;
-	generatedURL = originalLink;
+	urlWords = [];
+	generatedURL = originalLink + '?';
 	idx = Math.floor(Math.random() * words.length);
 	theWord = words[idx];
 	loseContainer.style.display = 'none';
@@ -265,6 +266,8 @@ function	restartGame() {
 	keys.forEach(key => {
 		updateKeyboard(key.textContent, 'default');
 	});
+	window.history.pushState('restart', document.title, window.location.pathname);
+	handleParams();
 }
 
 function creatRowExample(elem, word, style, idx) {
@@ -390,4 +393,3 @@ function handleParams() {
 }
 
 handleParams();
-
