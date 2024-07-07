@@ -270,6 +270,12 @@ function	restartGame() {
 	handleParams();
 }
 
+function	createLetterExample(style, letter)
+{
+	let	el = document.getElementById('example-let-' + style);
+	el.textContent = letter.toUpperCase();
+}
+
 function creatRowExample(elem, word, style, idx) {
 	let node = document.getElementById(elem);
 	let row = document.createElement('div');
@@ -283,6 +289,7 @@ function creatRowExample(elem, word, style, idx) {
 		if (j === idx) {
 			box.classList.remove('empty');
 			box.classList.add(style);
+			createLetterExample(style, word[j]);
 		}
 		box.appendChild(letter);
 		row.appendChild(box);
@@ -319,12 +326,13 @@ document.getElementById('theme-toggle').addEventListener('click', function(event
 	setTheme();
 });
 
-document.getElementById('play-icon').addEventListener('click', function(event) {
+let btnPlay = document.getElementById('play-icon');
+
+btnPlay.addEventListener('click', function(event) {
 	event.preventDefault();
 	event.target.blur();
 	restartGame();
-	let btn = document.getElementById('play-icon');
-	btn.style.display = 'none';
+	btnPlay.style.display = 'none';
 });
 
 let shareBnts = document.querySelectorAll('.share-btn');
@@ -344,7 +352,6 @@ document.querySelector('#cross-win').addEventListener('click', restartGame);
 
 function	showPlayBtn() {
 	let btn = document.getElementById('play-icon');
-
 	btn.style.display = 'block';
 }
 

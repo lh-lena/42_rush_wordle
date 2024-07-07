@@ -35,11 +35,6 @@
 	src: url('karnak-normal-400.woff2') format('truetype');
 }
 
-/* @font-face { */
-	/* font-family: 'karnak-bold'; */
-	/* src: url('karnakcondensed-normal-700.woff2') format('truetype'); */
-/* } */
-
 body {
     background-color: var(--bgd-color);
     color: var(--text-color);
@@ -119,6 +114,7 @@ button:focus {
     margin: 2px;
 	font-family: 'franklin', sans-serif;
 	font-size: 2rem;
+    transform: none;
 }
 
 .box p {
@@ -241,7 +237,7 @@ h2 {
 
 #lose {
     display: none;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "karnak", Helvetica, sans-serif;
     font-size: 25px;
     height: 800px;
     opacity: 0.98;
@@ -344,7 +340,6 @@ h2 {
     line-height: 0px;
 }
 
-
 .correct {
 	background-color: var(--bgd-clr-correct);
 }
@@ -400,25 +395,53 @@ h2 {
     84% { transform: translateX(-4px); }
     96% { transform: translateX(4px); }
     100% { transform: translateX(0); }
-  }
+}
 
 @media (max-width: 700px) {
-    .game-rules-wrapper {
+    .game-rules-wrapper,
+    #win,
+    #lose {
         min-width: 550px;
     }
 }
 
-@media (max-width: 400px) {
+@media (max-height: 850px) {
+    #lose, #win {
+        height: 600px;
+        min-width: 500px;
+        padding: 0;
+    }
+}
+
+@media (max-height: 650px) {
+    #lose, #win {
+        font-size: 18px;
+        height: 400px;
+        margin: 0;
+    }
+}
+
+@media (max-width: 440px) {
     .game-section {
         --max-width-game: 300px;
+        padding: 0;
     }
-    .game-rules-wrapper {
-        min-width: 550px;
-        font-size: 10px;
+    .game-rules-wrapper,
+    #win,
+    #lose {
+        min-width: 300px;
+        font-size: 16px;
+    }
+    #description {
+        padding: 0 20px;
     }
     h1 {
         margin: 0;
         font-size: 18px;
+    }
+    .cross-container {
+        width: 30px;
+        height: 30px;
     }
     .theme-toggle, 
     .game-rules-icon,
@@ -429,6 +452,11 @@ h2 {
     }
     .play-icon {
         width: 50px;
+    }
+    .share-btn,
+    .play-again {
+        width: 170px;
+        font-size: 18px;
     }
     .grid {
         margin: 0;
@@ -459,22 +487,8 @@ h2 {
     }
     #delete,
     #enter {
-        font-size: 10px;
+        font-size: 8px;
     }
 }
 
-@media (max-height: 850px) {
-    #lose, #win {
-        height: 600px;
-        padding: 0;
-    }
-}
-
-@media (max-height: 650px) {
-    #lose, #win {
-        font-size: 18px;
-        height: 400px;
-        margin: 0;
-    }
-}
 
