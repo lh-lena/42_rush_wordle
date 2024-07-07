@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+git -C /var/www/wordle stash
+git -C /var/www/wordle clean -df
+git -C /var/www/wordle checkout main
+git -C /var/www/wordle pull -f
+
+printf '%s\r\n' "HTTP/1.1 302 Moved"
+# TODO: NOT SAFE
+printf '%s\r\n' "Location: $HTTP_X_FORWARDED_PROTO://$SERVER_NAME/wordle/"
