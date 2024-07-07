@@ -185,7 +185,7 @@ function enter() {
 		wordError();
 		return;
 	}
-	generatedURL += (word ? '&' + encodeURIComponent('word') + encodeURIComponent(cursorRow + 1) + encodeURIComponent('=') + encodeURIComponent(word) : '');
+	generatedURL += (word ? '&' + encodeURIComponent('word') + encodeURIComponent(cursorRow) + '=' + encodeURIComponent(word) : '');
 	console.log(generatedURL);
 	console.log(originalLink);
 	reveal();
@@ -199,6 +199,8 @@ function enter() {
 }
 
 function win() {
+	if (urlWords[urlWords.length - 1] === theWord)
+		return;
 	let newParagraph = document.getElementById('description');
 	newParagraph.textContent = `You guessed the word ${theWord.toUpperCase()} in ${cursorRow + 1} out of ${rows} tries!`;
 	winContainer.style.display = 'block';
@@ -206,7 +208,8 @@ function win() {
 }
 
 function lose() {
-
+	if (urlWords.length === rows)
+		return;
 	spanWord.textContent = theWord;
 	loseContainer.style.display = 'block';
 	console.log(`You lost! The word was ${theWord}.`);
@@ -258,7 +261,7 @@ document.addEventListener("click", (keyEvent) => {
 
 function	shareResult() {
 	let	msg = document.getElementById('info-msg');
-	generatedURL += '&' + encodeURIComponent("theWord=" + encodeURIComponent(theWord));
+	generatedURL += '&theWord=' + encodeURIComponent(theWord);
 	navigator.clipboard.writeText(generatedURL.replace('/?&', '/?'));
 	msg.textContent = 'Copied results to clipboard';
 	msg.style.display = 'block';
@@ -350,3 +353,44 @@ document.querySelector('.game-rules-icon').addEventListener('click', showRules);
 document.querySelector('#cross-container').addEventListener('click', hideRules);
 document.querySelector('#cross-lose').addEventListener('click', restartGame);
 document.querySelector('#cross-win').addEventListener('click', restartGame);
+
+function animateWords(lines) {
+	let delay = 0;
+
+	lines.forEach(line => {
+		[...line].forEach(letter => {
+			setTimeout(() => {
+				handleKeyEvent(letter.toLowerCase());
+			}, delay += 100);
+		});
+		setTimeout(() => {
+			handleKeyEvent('enter');
+		}, delay += 100);
+	});
+}
+
+function getWordsFromParams(urlParams) {
+	let tmpWords = [];
+
+	for (let i = 0; i < rows; ++i) {
+		let word = urlParams.get('word' + i.toString());
+		if (word !== null && word.length == cols && words.includes(word))
+			tmpWords.push(word)
+		else
+			break
+	}
+	return tmpWords;
+}
+
+function handleParams() {
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	let urlWords = getWordsFromParams(urlParams);
+	const forceWord = urlParams.get('theWord');
+	if (forceWord !== null && words.includes(forceWord)) {
+		theWord = forceWord;
+	}
+
+	if (urlWords.length > 0)
+		animateWords(urlWords);
+}
