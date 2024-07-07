@@ -4,10 +4,10 @@ let winContainer = document.getElementById('win');
 let	rulesWrapper = document.getElementById('rules-wrapper');
 let spanWord = document.getElementById('cur-word');
 
-//const originalLink = window.location.hostname;
-const originalLink = 'https://timo.one/worlde/';
+/* const originalLink = window.location.hostname + '/'; */
+const originalLink = 'https://timo.one/worlde' + '/';
 // const curPageUrl = window.location.href;
-let generatedURL = originalLink;
+let generatedURL = originalLink + '?';
 let idx = Math.floor(Math.random() * words.length);
 let theWord = words[idx];
 const rows = 6;
@@ -186,7 +186,7 @@ function enter() {
 		wordError();
 		return;
 	}
-	generatedURL += (word ? '&' + encodeURIComponent('word') + encodeURIComponent(cursorRow + 1) + encodeURIComponent('=') + encodeURIComponent(word): '');
+	generatedURL += (word ? '&' + encodeURIComponent('word') + encodeURIComponent(cursorRow + 1) + encodeURIComponent('=') + encodeURIComponent(word) : '');
 	console.log(generatedURL);
 	console.log(originalLink);
 	reveal();
@@ -259,8 +259,8 @@ document.addEventListener("click", (keyEvent) => {
 
 function	shareResult() {
 	let	msg = document.getElementById('info-msg');
-	generatedURL += encodeURIComponent("theWord=" + encodeURIComponent(theWord));
-	navigator.clipboard.writeText(generatedURL);
+	generatedURL += '&' + encodeURIComponent("theWord=" + encodeURIComponent(theWord));
+	navigator.clipboard.writeText(generatedURL.replace('/?&', '/?'));
 	msg.textContent = 'Copied results to clipboard';
 	msg.style.display = 'block';
 	console.log(msg);
