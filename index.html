@@ -43,25 +43,35 @@
         </div>
     </div>
     <div id="win" class="win">
-        <div>
-            <p><strong>Congratulations!</strong></p>
-            <div class="cross-container" id="cross-win">
-                <div class="line1"></div>
-                <div class="line2"></div>
-            </div>
-            <div class="styled-hr"></div>
-            <button id="share-btn">Share <span class="share">➤</span></button>
+        <h2>Congratulations!</h2>
+        <p id="description"></p>
+        <div class="cross-container" id="cross-win">
+            <div class="line1"></div>
+            <div class="line2"></div>
         </div>
+        <div class="share-container">
+            <button class="share-btn">Share <span class="share">➤</span></button>
+        </div>
+        <div class="play-again-container">
+            <button class="play-again">Play again!</button>
+        </div>
+        <!-- <div class="styled-hr"></div> -->
     </div>
     <div id="lose" class="lose">
         <p>You lost!</p>
-        <p>The word was <span id="cur-word"></span></p>
+        <p>The word was: <br><span id="cur-word"></span></p>
         <p>Better luck next time!</p>
+        <div class="share-container">
+            <button class="share-btn">Share <span class="share">➤</span></button>
+        </div>
+        <div class="play-again-container">
+            <button class="play-again">Play again!</button>
+        </div>
         <div class="cross-container" id="cross-lose">
             <div class="line1"></div>
             <div class="line2"></div>
         </div>
-        <div class="styled-hr"></div>
+        <!-- <div class="styled-hr"></div> -->
     </div>
     <div class="game-section">
         <div class="header-module">
@@ -70,10 +80,8 @@
             <h1 class="welcome-title">wordle</h1>
             <hr class="styled-hr">
         </div>
-        <div id="word-error">
-            <button id="word-error-msg">
-                Not in word list
-            </button>
+        <div id="info-msg-container">
+            <button id="info-msg"></button>
         </div>
         <div class="grid" id="grid"></div>
         <div class="keyboard" id="keyboard">

@@ -4,13 +4,13 @@ let winContainer = document.getElementById('win');
 let	rulesWrapper = document.getElementById('rules-wrapper');
 let spanWord = document.getElementById('cur-word');
 
-
-const idx = Math.floor(Math.random() * words.length);
-const theWord = words[idx];
+let idx = Math.floor(Math.random() * words.length);
+let theWord = words[idx];
 const rows = 6;
-const cols = 5;
+let cols = words[idx].length;
 let cursorRow = 0;
 let cursorCol = 0;
+let	userWin = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
 	const fontFace = new FontFace('whatever', 'url("franklin-normal-700.woff2")');
@@ -126,7 +126,8 @@ function reveal() {
 	}
 	if (correctLetters === theWord.length)
 	{
-		win()
+		userWin = 1;
+		win();
 		return;
 	}
 
@@ -143,7 +144,8 @@ function reveal() {
 }
 
 function wordError() {
-	let	msg = document.getElementById('word-error-msg');
+	let	msg = document.getElementById('info-msg');
+	msg.innerHTML = 'Not in word list';
 	msg.style.display = 'block';
 	setTimeout(() => {
 		msg.style.display = 'none';
@@ -164,7 +166,7 @@ function enter() {
 		return;
 	}
 	reveal();
-	if (cursorRow >= rows - 1)
+	if (cursorRow >= rows - 1 && userWin === 0)
 	{
 		lose();
 		return;
@@ -174,10 +176,9 @@ function enter() {
 }
 
 function win() {
-	let newParagraph = document.createElement('p');
+	let newParagraph = document.getElementById('description');
 
-	newParagraph.textContent = `You guessed the word in ${cursorRow + 1} out of ${rows} tries!`;
-	winContainer.append(newParagraph);
+	newParagraph.textContent = `You guessed the word ${theWord.toUpperCase()} in ${cursorRow + 1} out of ${rows} tries!`;
 	winContainer.style.display = 'block';
 	console.log(`Congratulations! You guessed the word in ${cursorRow + 1} out of ${rows} tries!`);
 }
@@ -233,11 +234,22 @@ document.addEventListener("click", (keyEvent) => {
 	handleKeyEvent(letter);
 });
 
+function	shareResult() {
+	let	msg = document.getElementById('info-msg');
+	msg.textContent = 'Copied results to clipboard';
+	msg.style.display = 'block';
+	console.log(msg);
+	setTimeout(() => {
+		msg.style.display = 'none';
+	}, 1000);
+}
+
 function	restartGame() {
 	cursorRow = 0;
 	cursorCol = 0;
-	// idx = Math.floor(Math.random() * words.length); //TODO
-	// theWord = words[idx];
+	userWin = 0;
+	idx = Math.floor(Math.random() * words.length); //TODO
+	theWord = words[idx];
 	console.log(theWord);
 	loseContainer.style.display = 'none';
 	winContainer.style.display = 'none';
@@ -273,7 +285,23 @@ function	setTheme()
 	themeToggleButton.innerHTML = newTheme === 'dark' ? '🔆' : '🌙';
 }
 
-document.querySelector('.theme-toggle').addEventListener('click', setTheme);
+
+document.getElementById('theme-toggle').addEventListener('click', function(event) {
+	event.preventDefault();
+	event.target.blur();
+	setTheme();
+});
+
+let shareBnts = document.querySelectorAll('.share-btn');
+for (let i = 0; i < bnts.length; i++) {
+	shareBnts[i].addEventListener('click', shareResult);
+}
+
+let bnts = document.querySelectorAll('.play-again');
+for (let i = 0; i < bnts.length; i++) {
+	bnts[i].addEventListener('click', restartGame);
+}
+
 document.querySelector('.game-rules-icon').addEventListener('click', showRules);
 document.querySelector('#cross-container').addEventListener('click', hideRules);
 document.querySelector('#cross-lose').addEventListener('click', restartGame);
