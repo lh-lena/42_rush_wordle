@@ -4,8 +4,7 @@ let winContainer = document.getElementById('win');
 let	rulesWrapper = document.getElementById('rules-wrapper');
 let spanWord = document.getElementById('cur-word');
 
-/* const originalLink = window.location.hostname + '/'; */
-const originalLink = 'https://timo.one/worlde' + '/';
+const originalLink = window.location.origin + window.location.pathname;
 // const curPageUrl = window.location.href;
 let generatedURL = originalLink + '?';
 let idx = Math.floor(Math.random() * words.length);
