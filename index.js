@@ -101,7 +101,16 @@ function reveal() {
 		setLetter(cursorRow, i, letter, 'absent');
 		updateKeyboard(letter, 'absent');
 	}
-	
+	for (let i = 0; i < rowBoxes.length; ++i)
+	{
+		let letter = rowBoxes[i].innerText.toLowerCase();
+		if (letter === theWord[i])
+		{
+			setLetter(cursorRow, i, letter, 'correct');
+			updateKeyboard(letter, 'correct');
+			letterFreqs[letter]--;
+		}
+	}
 	for (let i = 0; i < rowBoxes.length; ++i)
 	{
 		let letter = rowBoxes[i].innerText.toLowerCase();
@@ -112,7 +121,6 @@ function reveal() {
 			letterFreqs[letter]--;
 		}
 	}
-
 	let correctLetters = 0;
 	for (let i = 0; i < rowBoxes.length; ++i)
 	{
@@ -258,7 +266,7 @@ function	restartGame() {
 	idx = Math.floor(Math.random() * words.length);
 	theWord = words[idx];
 	loseContainer.style.display = 'none';
-	winContainer.style.display = 'none';
+	winContainer.style.displaey = 'none';
 	for (let i = 0; i < rows; i++)
 		for (let j = 0; j < cols; j++)
 			setLetter(i, j, '', 'empty');
