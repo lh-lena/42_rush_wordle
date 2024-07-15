@@ -50,7 +50,23 @@ button:focus {
     position: relative;
     text-transform: capitalize;
     font-style: 26px;
+    /* max-width: var(--max-width-game); */
+}
+
+.game-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     max-width: var(--max-width-game);
+    height: 100%;
+    text-align: center;
+    padding-top: 3vh;
+    margin: 0 auto;
+    color: var(--text-color);
+    cursor: default;
+    height: 100vh;
+
 }
 
 .welcome-title {
@@ -85,23 +101,21 @@ button:focus {
     transition: display 10s ease;
 }
 
-.game-section {
-    position: relative;
-    max-width: var(--max-width-game);
-    height: 100%;
-    text-align: center;
-    padding-top: 5%;
+.grid-container {
+
     margin: 0 auto;
-    color: var(--text-color);
-    cursor: default;
+    height: 55%;
+    /* height: 60vh; added */
 }
 
 .grid {
     position: relative;
     display: flex;
+    flex: 1;
     flex-direction: column;
     flex-wrap: wrap;
     max-height: fit-content;
+    max-width: fit-content;
     padding: 10px;
 }
 
@@ -112,8 +126,8 @@ button:focus {
     border: 2px solid var(--border-clr);
     display: inline-block;
     margin: 2px;
-	font-family: 'franklin', sans-serif;
-	font-size: 2rem;
+    font-family: 'franklin', sans-serif;
+    font-size: 2rem;
     transform: none;
 }
 
@@ -137,7 +151,11 @@ button:focus {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+    height: 220px;
+    margin: 0 8px;
+    /* margin-top: 30px; */
+    /* margin-top: 10vh; */
+    /* margin: 1rem; */
 }
 
 .keyboard-row {
@@ -199,8 +217,8 @@ button:focus {
 }
 
 .game-rules-wrapper,
-.win,
-.lose {
+#win,
+#lose {
     display: none;
     position: fixed;
     min-width: 600px;
@@ -255,7 +273,6 @@ h2 {
     height: 52px;
     border-radius: 30px
 }
-
 
 .play-again {
     background-color: var(--text-color);
@@ -428,7 +445,7 @@ h2 {
 
 @media (max-height: 850px) {
     #lose, #win {
-        height: 600px;
+        max-height: 600px;
         min-width: 500px;
         padding: 0;
     }
@@ -442,22 +459,93 @@ h2 {
     }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 426px) {
     .game-section {
-        --max-width-game: 300px;
-        padding: 0;
+        padding-top: 0;
     }
     .game-rules-wrapper {
-        min-width: 300px;
-        font-size: 14px;
-        padding: 0;
+        min-width: 330px;
+        font-size: 16px;
+        padding: 10px 15px;
     }
     #win,
     #lose {
-        min-width: 300px;
+        min-width: 320px;
+        padding: 30px 0;
+        min-height: 500px;
+    }
+    #description {
+        padding: 0 20px;
+        font-size: 18px;
+    }
+    h1 {
+        font-size: 28px;
+    }
+    .cross-container {
+        width: 30px;
+        height: 30px;
+    }
+    .theme-toggle, 
+    .game-rules-icon,
+    .play-icon {
+        margin-top: 10px;
+        font-size: 18px;
+        width: 38px;
+        height: 38px;
+    }
+    .game-rules-icon {
+        right: 13%;
+    }
+    .play-icon {
+        width: 70px;
+        left: 10px;
+    }
+    .share-btn,
+    .play-again {
+        width: 190px;
+        font-size: 20px;
+    }
+    #btn-dictionary {
+        width: 150px;
+        font-size: 20px;
+    }
+    div#grid {
+        padding-top: 0;
+    }
+    div.box {
+        height: 54px;
+        width: 54px;
+    }
+    div.row {
+        max-width: none;
+        margin: 0 2px;
+    }
+    div.box p {
+        font-size: 20px;
+        justify-content: center;
+        line-height: 16px;
+    }
+    .key {
+        line-height: 43px;
         font-size: 14px;
+    }
+    #delete,
+    #enter {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 321px) {
+    .game-rules-wrapper {
+        min-width: 280px;
+        font-size: 14px;
+        padding: 10px;
+    }
+    #win,
+    #lose {
+        min-width: 280px;
         padding: 20px 0;
-        height: 500px;
+        min-height: 500px;
     }
     .share-container {
         margin: 0;
@@ -468,7 +556,7 @@ h2 {
     }
     h1 {
         margin: 0;
-        font-size: 18px;
+        font-size: 20px;
     }
     .cross-container {
         width: 30px;
@@ -477,6 +565,7 @@ h2 {
     .theme-toggle, 
     .game-rules-icon,
     .play-icon {
+        margin: 0;
         font-size: 14px;
         width: 30px;
         height: 30px;
@@ -493,31 +582,16 @@ h2 {
         width: 130px;
         font-size: 18px;
     }
-    .grid {
-        margin: 0;
-    }
-    .row {
-        padding: 0;
-    }
     div.box {
-        height: 32px;
-        width: 32px;
-    }
-    div.row {
-        max-width: none;
-        margin: 0 2px;
+        height: 42px;
+        width: 42px;
     }
     div.box p {
-        font-size: 18px;
-        line-height: 0px;
-    }
-    .keyboard {
-        height: 15%;
-        margin-top: 20px;
-        padding: 0;
+        font-size: 1rem;
+        line-height: 1rem;
     }
     .key {
-        line-height: 30px;
+        line-height: 40px;
         font-size: 14px;
     }
     #delete,
@@ -526,4 +600,17 @@ h2 {
     }
 }
 
-
+@media (max-height: 665px) {
+    div.box {
+        height: 42px;
+        width: 42px;
+    }
+    div.box p {
+        font-size: 1rem;
+        line-height: 1rem;
+    }
+    .key {
+        line-height: 40px;
+        font-size: 14px;
+    }
+}
