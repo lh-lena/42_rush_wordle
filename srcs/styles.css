@@ -27,12 +27,12 @@
 
 @font-face {
 	font-family: 'franklin';
-	src: url('franklin-normal-700.woff2') format('truetype');
+	src: url('../fonts/franklin-normal-700.woff2') format('woff2');
 }
 
 @font-face {
 	font-family: 'karnak';
-	src: url('karnak-normal-400.woff2') format('truetype');
+	src: url('../fonts/karnak-normal-400.woff2') format('woff2');
 }
 
 body {
@@ -50,7 +50,6 @@ button:focus {
     position: relative;
     text-transform: capitalize;
     font-style: 26px;
-    /* max-width: var(--max-width-game); */
 }
 
 .game-section {
@@ -105,7 +104,6 @@ button:focus {
 
     margin: 0 auto;
     height: 55%;
-    /* height: 60vh; added */
 }
 
 .grid {
