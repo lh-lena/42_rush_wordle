@@ -239,6 +239,8 @@ setTimeout(() => {
 }, 500);
 
 document.addEventListener("click", (keyEvent) => {
+	keyEvent.preventDefault();
+	keyEvent.target.blur();
 	el = keyEvent.srcElement;
 	if (!el.classList.contains('key'))
 		return;
@@ -383,7 +385,7 @@ function animateWords(lines) {
 		});
 		setTimeout(() => {
 			handleKeyEvent('enter');
-		}, delay += 100);
+		}, delay += 200);
 	});
 	setTimeout(() => {
 		showPlayBtn();

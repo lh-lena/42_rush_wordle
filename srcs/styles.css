@@ -459,7 +459,7 @@ h2 {
 
 @media (max-width: 426px) {
     .game-section {
-        padding-top: 0;
+        padding: 0;
     }
     .game-rules-wrapper {
         min-width: 330px;
@@ -510,6 +510,9 @@ h2 {
     div#grid {
         padding-top: 0;
     }
+    .grid-container {
+        height: 50%;
+    }
     div.box {
         height: 54px;
         width: 54px;
@@ -524,12 +527,19 @@ h2 {
         line-height: 16px;
     }
     .key {
-        line-height: 43px;
-        font-size: 14px;
+        font-size: 16px;
+    }
+    .key:hover {
+        background-color: var(--key-bgd-color);
     }
     #delete,
     #enter {
         font-size: 12px;
+    }
+    .theme-toggle:hover, 
+    .game-rules-icon:hover,
+    .play-icon:hover {
+    background-color: var(--bgd-color);
     }
 }
 
@@ -588,8 +598,11 @@ h2 {
         font-size: 1rem;
         line-height: 1rem;
     }
+    .grid-container {
+        height: 55%;
+    }
     .key {
-        line-height: 40px;
+        line-height: 38px;
         font-size: 14px;
     }
     #delete,
