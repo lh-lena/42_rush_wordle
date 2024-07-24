@@ -353,6 +353,7 @@ for (let i = 0; i < shareBnts.length; i++) {
 let bnts = document.querySelectorAll('.play-again');
 for (let i = 0; i < bnts.length; i++) {
 	bnts[i].addEventListener('click', restartGame);
+	bnts[i].style.display = 'none';
 }
 
 let dictionaryBtn = document.getElementById('btn-dictionary');
@@ -367,7 +368,10 @@ dictionaryBtn.addEventListener('click', (e) => {
 document.querySelector('.game-rules-icon').addEventListener('click', showRules);
 document.querySelector('#cross-container').addEventListener('click', hideRules);
 document.querySelector('#cross-lose').addEventListener('click', restartGame);
-document.querySelector('#cross-win').addEventListener('click', restartGame);
+document.querySelector('#cross-win').addEventListener('click', () => {
+	winContainer.style.display = 'none';
+	restartGame();
+});
 
 function	showPlayBtn() {
 	let btn = document.getElementById('play-icon');

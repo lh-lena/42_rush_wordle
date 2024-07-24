@@ -64,7 +64,7 @@ button:focus {
     margin: 0 auto;
     color: var(--text-color);
     cursor: default;
-    height: 100vh;
+    height: 95vh;
 
 }
 
@@ -151,9 +151,6 @@ button:focus {
     align-items: center;
     height: 220px;
     margin: 0 8px;
-    /* margin-top: 30px; */
-    /* margin-top: 10vh; */
-    /* margin: 1rem; */
 }
 
 .keyboard-row {
@@ -240,6 +237,8 @@ button:focus {
     font-size: 25px;
     opacity: 0.98;
     text-align: center;
+    height: 70%;
+    padding: 50px;
 }
 
 #win button,
@@ -418,6 +417,7 @@ h2 {
     text-transform: uppercase;
 }
 
+
 @keyframes moveLeftRight {
     0% { transform: translateX(0); }
     8% { transform: translateX(-4px); }
@@ -433,11 +433,14 @@ h2 {
     100% { transform: translateX(0); }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 720px) {
     .game-rules-wrapper,
     #win,
     #lose {
         min-width: 550px;
+    }
+    .keyboard {
+        padding-top: 15px;
     }
 }
 
@@ -445,22 +448,29 @@ h2 {
     #lose, #win {
         max-height: 600px;
         min-width: 500px;
+    }
+    #lose {
         padding: 0;
     }
 }
 
-@media (max-height: 650px) {
-    #lose, #win {
-        font-size: 18px;
-        height: 400px;
-        margin: 0;
+@media (max-width: 545px) {
+    #win,
+    #lose {
+        min-width: 420px;
+        min-height: 80%;
+    }
+    .game-section {
+        padding: 0;
+    }
+    .game-rules-wrapper {
+        min-width: 430px;
+        font-size: 16px;
+        min-height: 80%;
     }
 }
 
 @media (max-width: 426px) {
-    .game-section {
-        padding: 0;
-    }
     .game-rules-wrapper {
         min-width: 330px;
         font-size: 16px;
@@ -471,6 +481,7 @@ h2 {
         min-width: 320px;
         padding: 30px 0;
         min-height: 500px;
+        max-height: 70%;
     }
     #description {
         padding: 0 20px;
@@ -510,9 +521,6 @@ h2 {
     div#grid {
         padding-top: 0;
     }
-    .grid-container {
-        height: 50%;
-    }
     div.box {
         height: 54px;
         width: 54px;
@@ -539,7 +547,25 @@ h2 {
     .theme-toggle:hover, 
     .game-rules-icon:hover,
     .play-icon:hover {
-    background-color: var(--bgd-color);
+        background-color: var(--bgd-color);
+    }
+}
+
+@media (max-width: 350px) {
+    div.box {
+        height: 48px;
+        width: 48px;
+    }
+    div.box p {
+        font-size: 18px;
+        justify-content: center;
+        line-height: 16px;
+    }
+    .keyboard {
+        margin: 0;
+    }
+    .key {
+        font-size: 14px;
     }
 }
 
@@ -590,6 +616,9 @@ h2 {
         width: 130px;
         font-size: 18px;
     }
+    div.row {
+        padding: 0;
+    }
     div.box {
         height: 42px;
         width: 42px;
@@ -611,7 +640,34 @@ h2 {
     }
 }
 
-@media (max-height: 665px) {
+@media (max-height: 730px) {
+    div.box {
+        height: 50px;
+        width: 50px;
+    }
+    div.box p {
+        font-size: 1rem;
+        line-height: 1rem;
+    }
+    .key {
+        line-height: 50px;
+        font-size: 16px;
+    }
+}
+
+@media (max-height: 700px) {
+    .game-section {
+        padding: 0;
+    }
+    #lose, #win {
+        font-size: 18px;
+        height: 400px;
+        margin: 0;
+        padding: 10px 0;
+    }
+    h1 {
+        margin: 0;
+    }
     div.box {
         height: 42px;
         width: 42px;
@@ -620,6 +676,15 @@ h2 {
         font-size: 1rem;
         line-height: 1rem;
     }
+    .game-rules-wrapper {
+        padding: 10px 25px;
+        min-width: 430px;
+        font-size: 16px;
+        min-height: fit-content;
+    }
+}
+
+@media (max-height: 605px) {
     .key {
         line-height: 40px;
         font-size: 14px;
