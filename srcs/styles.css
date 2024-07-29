@@ -136,6 +136,8 @@ button:focus {
     justify-content: center;
     line-height: 10%;
     color: var(--text-color);
+    transform: none;
+
 }
 
 .row {
@@ -417,6 +419,14 @@ h2 {
     text-transform: uppercase;
 }
 
+@keyframes flipX {
+    0% {
+       transform: rotateX(90deg);
+    }
+     100% {
+        transform:  rotateX(0deg);
+    }
+}
 
 @keyframes moveLeftRight {
     0% { transform: translateX(0); }
@@ -674,7 +684,7 @@ h2 {
     }
     div.box p {
         font-size: 1rem;
-        line-height: 1rem;
+        line-height: 0.7rem;
     }
     .game-rules-wrapper {
         padding: 10px 25px;
@@ -688,5 +698,45 @@ h2 {
     .key {
         line-height: 40px;
         font-size: 14px;
+    }
+}
+
+@media (max-height: 551px) {
+    .keyboard {
+        padding-top: 0;
+    }
+    div.box {
+        height: 38px;
+        width: 38px;
+    }
+    div.box p {
+        font-size: 1rem;
+        line-height: 0.5rem;
+    }
+}
+
+@media (max-height: 501px) {
+    div.box {
+        height: 32px;
+        width: 32px;
+    }
+    div.box p {
+        font-size: 0.8rem;
+        line-height: 0.5rem;
+    }
+}
+
+@media (max-height: 435px) {
+    div.box {
+        height: 28px;
+        width: 28px;
+    }
+    div.box p {
+        font-size: 0.7rem;
+        line-height: 0.5rem;
+    }
+    .key {
+        line-height: 30px;
+        font-size: 12px;
     }
 }
