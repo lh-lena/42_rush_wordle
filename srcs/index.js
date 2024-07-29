@@ -14,13 +14,15 @@ let cursorRow = 0;
 let cursorCol = 0;
 let	userWin = 0;
 let urlWords = [];
+let flipDelay = 340;
+
 
 document.addEventListener("DOMContentLoaded", () => {
 	createGrid(rows, cols);
 	setTheme();
-	creatRowExample('example-correct', 'weary', 'correct', 0);
-	creatRowExample('example-present', 'pills', 'present', 2);
-	creatRowExample('example-absent', 'vague', 'absent', 3);
+	createRowExample('example-correct', 'weary', 'correct', 0);
+	createRowExample('example-present', 'pills', 'present', 2);
+	createRowExample('example-absent', 'vague', 'absent', 3);
 });
 
 function createGrid(rows, cols) {
@@ -53,7 +55,8 @@ function setLetter(row, col, letter, state) {
 		box.classList.add('default-cell-bg');
 	else
 		box.classList.add(state);
-	if (letter)
+
+	if (letter && box.classList.contains('default-cell-bg'))
 	{
 		box.style.transform = 'scale(1.1)';
 		setTimeout(() => {
@@ -94,50 +97,65 @@ function updateKeyboard(letter, state) {
 function reveal() {
 	let rowBoxes = document.querySelectorAll('.row-' + cursorRow.toString());
 	let letterFreqs = getFrequencies(theWord);
+	let letterColor = {};
 
-	for (let i = 0; i < rowBoxes.length; ++i)
-	{
-		let letter = rowBoxes[i].innerText.toLowerCase();
-		setLetter(cursorRow, i, letter, 'absent');
-		updateKeyboard(letter, 'absent');
-	}
-	for (let i = 0; i < rowBoxes.length; ++i)
+	for (let i = 0; i < rowBoxes.length; i++)
+		letterColor[i] = 'absent';
+	for (let i = 0; i < rowBoxes.length; i++)
 	{
 		let letter = rowBoxes[i].innerText.toLowerCase();
 		if (letter === theWord[i])
 		{
-			setLetter(cursorRow, i, letter, 'correct');
-			updateKeyboard(letter, 'correct');
+			letterColor[i] = 'correct';
 			letterFreqs[letter]--;
 		}
 	}
-	for (let i = 0; i < rowBoxes.length; ++i)
+	for (let i = 0; i < rowBoxes.length; i++)
 	{
 		let letter = rowBoxes[i].innerText.toLowerCase();
 		if (theWord.includes(letter) && letterFreqs[letter] >= 1)
 		{
-			setLetter(cursorRow, i, letter, 'present');
-			updateKeyboard(letter, 'present');
+			letterColor[i] = 'present';
 			letterFreqs[letter]--;
 		}
 	}
 	let correctLetters = 0;
-	for (let i = 0; i < rowBoxes.length; ++i)
+	for (let i = 0; i < rowBoxes.length; i++)
 	{
 		let letter = rowBoxes[i].innerText.toLowerCase();
 		if (letter === theWord[i])
 		{
-			setLetter(cursorRow, i, letter, 'correct');
+			letterColor[i] = 'correct';
 			correctLetters++;
-			updateKeyboard(letter, 'correct');
 			letterFreqs[letter]--;
 		}
 	}
-	if (correctLetters === theWord.length)
+	for (let k = 0; k < rowBoxes.length; k++)
 	{
-		win();
-		return;
+			setTimeout(() => {
+			let lett = rowBoxes[k].innerText.toLowerCase();
+			setLetter(cursorRow, k, lett, letterColor[k]);
+			updateKeyboard(lett, letterColor[k]);
+		}, (k + 0.1) * flipDelay);
 	}
+	for (let j = 0; j < rowBoxes.length; j++)
+	{
+		let delay = j * flipDelay;
+		setTimeout(() => {
+			rowBoxes[j].style.animation = 'flipX 0.9s';
+		}, delay);
+		setTimeout(() => {
+			rowBoxes[j].style.animation = 'none';
+		}, delay + 1000);
+	}
+	setTimeout(() =>{
+		if (correctLetters === theWord.length)
+		{
+			win();
+			return;
+		}
+		letterColor = {};
+	}, flipDelay * cols + 1);
 }
 
 function wordError() {
@@ -172,13 +190,15 @@ function enter() {
 	}
 	generatedURL += (word ? '&' + encodeURIComponent('word') + encodeURIComponent(cursorRow) + '=' + encodeURIComponent(word) : '');
 	reveal();
-	if (cursorRow >= rows - 1 && userWin === 0)
-	{
-		lose();
-		return;
-	}
-	cursorCol = 0;
-	cursorRow++;
+	setTimeout(() => {
+		if (cursorRow >= rows - 1 && userWin === 0)
+		{
+			lose();
+			return;
+		}
+		cursorCol = 0;
+		cursorRow++;
+	}, flipDelay * cols);
 }
 
 function win() {
@@ -286,7 +306,7 @@ function	createLetterExample(style, letter)
 	el.textContent = letter.toUpperCase();
 }
 
-function creatRowExample(elem, word, style, idx) {
+function createRowExample(elem, word, style, idx) {
 	let node = document.getElementById(elem);
 	let row = document.createElement('div');
 	row.classList.add('row');
@@ -353,14 +373,13 @@ for (let i = 0; i < shareBnts.length; i++) {
 let bnts = document.querySelectorAll('.play-again');
 for (let i = 0; i < bnts.length; i++) {
 	bnts[i].addEventListener('click', restartGame);
-	bnts[i].style.display = 'none';
 }
 
 let dictionaryBtn = document.getElementById('btn-dictionary');
 dictionaryBtn.addEventListener('click', (e) => {
 	e.preventDefault();
 	e.target.blur();
-	let linkUrl = `https://www.merriam-webster.com/dictionary/${theWord}`;
+	let linkUrl = `https://www.thefreedictionary.com/${theWord}`;
 	window.open(linkUrl, '_blank');
 });
 
@@ -382,18 +401,17 @@ function animateWords(lines) {
 	let delay = 0;
 
 	lines.forEach(line => {
-		[...line].forEach(letter => {
+			[...line].forEach(letter => {
+				setTimeout(() => {
+					handleKeyEvent(letter.toLowerCase());
+				}, delay += 200);
+			});
 			setTimeout(() => {
-				handleKeyEvent(letter.toLowerCase());
-			}, delay += 100);
-		});
-		setTimeout(() => {
-			handleKeyEvent('enter');
-		}, delay += 200);
+				handleKeyEvent('enter');
+			}, delay += 300);
+			delay += (flipDelay * cols + 1);
 	});
-	setTimeout(() => {
-		showPlayBtn();
-	}, delay);
+	showPlayBtn();
 }
 
 function getWordsFromParams(urlParams) {
